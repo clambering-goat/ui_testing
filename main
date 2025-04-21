@@ -1,0 +1,221 @@
+import tkinter as tk
+from tkinter import ttk
+from functools import partial
+LARGEFONT = ("Verdana", 35)
+loaction_of_menu=2
+
+
+
+
+class tkinterApp(tk.Tk):
+
+    # __init__ function for class tkinterApp
+    def __init__(self, *args, **kwargs):
+        # __init__ function for class Tk
+        tk.Tk.__init__(self, *args, **kwargs)
+
+        # creating a container
+        container = tk.Frame(self)
+        container.pack(side="top", fill="both", expand=True)
+
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        # initializing frames to an empty array
+        self.frames = {}
+        loaction_of_menu = {}
+        # iterating through a tuple consisting
+        # of the different page layouts
+        for F in (StartPage, Page1, Page2,update_config):
+            frame = F(container, self)
+
+            # initializing frame of that object from
+            # startpage, page1, page2 respectively with
+            # for loop
+            self.frames[F] = frame
+
+            frame.grid(row=2, column=0, sticky="nsew")
+
+        self.show_frame(StartPage)
+
+    # to display the current frame passed as
+    # parameter
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
+# first window frame startpage
+
+
+def select_system(self,input_function):
+
+
+    def retrieve_input():
+
+        print(opt.get())
+        print(opt2.get())
+
+
+
+
+
+
+    def updae_ms_list(ms):
+        ms = opt.get()
+        print(ms)
+        ms_list = {
+            "Monday": ["1", "2"],
+            "Tuesday": ["12", "22"],
+            "Wednesday": ["13", "23"],
+            "Thursday": ["14", "24"],
+            "Friday": ["15", "25"],
+            "Saturday": ["16", "26"],
+            "Sunday": ["17", "27"]
+        }
+        ms = ms_list[ms]
+        action_with_arg = partial(input_function, opt2.get())
+        tk.OptionMenu(self, opt2, *ms,command=action_with_arg).grid(row=4, column=3, padx=10, pady=10)
+
+        # Dropdown options
+
+    env = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    # Selected option variable
+    opt = tk.StringVar(value="Monday")
+
+    tk.OptionMenu(self, opt, *env, command=updae_ms_list).grid(row=3, column=3, padx=10, pady=10)
+
+    # Dropdown options
+    ms = ["1", "2", "3", "4", "5", "6", "7"]
+    # Selected option variable
+    opt2 = tk.StringVar(value="1")
+
+
+
+
+
+
+
+def menu_bar(self,controller):
+    button1 = ttk.Button(self, text="display_config",
+                         command=lambda: controller.show_frame(Page1))
+
+    # putting the button in its place by
+    # using grid
+    button1.grid(row=loaction_of_menu, column=1, padx=10, pady=10)
+
+    ## button to show frame 2 with text layout2
+    button2 = ttk.Button(self, text="deploy",
+                         command=lambda: controller.show_frame(Page2))
+
+    # putting the button in its place by
+    # using grid
+    button2.grid(row=2, column=2, padx=10, pady=10)
+
+    ## button to show frame 2 with text layout2
+    button3 = ttk.Button(self, text="update_config",
+                         command=lambda: controller.show_frame(update_config))
+
+    # putting the button in its place by
+    # using grid
+    button3.grid(row=loaction_of_menu, column=3, padx=10, pady=10)
+
+
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        menu_bar(self, controller)
+        #constant_buttons(self)
+
+        # label of frame Layout 2
+        label = ttk.Label(self, text="scan_page", font=LARGEFONT)
+
+        # putting the grid in its place by using
+        # grid
+        label.grid(row=0, column=4, padx=10, pady=10)
+
+
+
+
+
+        env_scan=["sit","dev","nft","uat"]
+        for count,env in enumerate(env_scan):
+
+            # add exe call here
+            action_with_arg = partial(print, env)
+
+
+            ## button to show frame 2 with text layout2
+            button3 = ttk.Button(self, text=env,
+                                 command=action_with_arg)
+
+            # putting the button in its place by
+            # using grid
+            button3.grid(row=3+count, column=2, padx=10, pady=10)
+
+
+
+
+
+
+# second window frame page1
+class Page1(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, text="display_config", font=LARGEFONT)
+        label.grid(row=0, column=4, padx=10, pady=10)
+        menu_bar(self, controller)
+        select_system(self,print)
+
+
+
+
+
+
+
+# third window frame page2
+class Page2(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, text="deploy", font=LARGEFONT)
+        label.grid(row=0, column=4, padx=10, pady=10)
+
+        menu_bar(self, controller)
+        select_system(self, print)
+
+        def get_text():
+            inputValue = textBox.get("1.0", "end-1c")
+
+        textBox = tk.Text(self, height=2, width=10)
+        textBox.grid(row=3, column=5, padx=10, pady=10)
+
+        buttonCommit = tk.Button(self, height=1, width=10, text="Commit",
+                                 command=lambda: get_text())
+        # command=lambda: retrieve_input() >>> just means do this when i press the button
+        buttonCommit.grid(row=6, column=3, padx=10, pady=10)
+
+
+
+class update_config(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = ttk.Label(self, text="update_config", font=LARGEFONT)
+        label.grid(row=0, column=4, padx=10, pady=10)
+        menu_bar(self, controller)
+        select_system(self,print)
+        def get_text():
+            inputValue = textBox.get("1.0", "end-1c")
+
+        textBox = tk.Text(self, height=2, width=10)
+        textBox.grid(row=3, column=5, padx=10, pady=10)
+
+        buttonCommit = tk.Button(self, height=1, width=10, text="Commit",
+                                 command=lambda: get_text())
+        # command=lambda: retrieve_input() >>> just means do this when i press the button
+        buttonCommit.grid(row=6, column=3, padx=10, pady=10)
+
+# Driver Code
+app = tkinterApp()
+app.mainloop()
