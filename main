@@ -178,7 +178,7 @@ class UpdatePage(tk.Frame):
         def read_file():
             textBox.delete("1.0", "end") #this clears the text box
             directory = os.path.dirname(__file__) 
-            file = "readthisfile.txt"
+            file = "jsonfile.json"
             filepath = os.path.join(directory, file)
             
             with open(filepath, "r") as file:
@@ -189,6 +189,13 @@ class UpdatePage(tk.Frame):
             
         textBox = tk.Text(self, height=10, width=50)
         textBox.grid(row=4, column=0, padx=10, pady=10, columnspan=4)
+        
+        ##SCROLLBAR FOR TEXTBOX
+        # vertScrollbar = tk.Scrollbar(textBox, orient="vertical", command=textBox.yview)
+        # vertScrollbar.config(command=textBox.yview)
+        # vertScrollbar.grid(row=4, column=4)
+        # textBox.configure(yscrollcommand=vertScrollbar.set)
+        # vertScrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
         buttonCommit = tk.Button(self, height=1, width=10, text="Commit",
                                  command= read_file)
