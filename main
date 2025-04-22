@@ -3,6 +3,9 @@ import os
 from tkinter import ttk
 from tkinter import messagebox
 from functools import partial
+from jsonhandler import jsonloader
+
+
 LARGEFONT = ("Verdana", 35)
 MENU_ROW_LOC=2 #Change name to clearer represent what location is represented
 
@@ -177,15 +180,23 @@ class UpdatePage(tk.Frame):
             
         def read_file():
             textBox.delete("1.0", "end") #this clears the text box
-            directory = os.path.dirname(__file__) 
+            directory = os.path.dirname(__file__)
             file = "jsonfile.json"
             filepath = os.path.join(directory, file)
             
-            with open(filepath, "r") as file:
-                filecontents = file.read()
-                textBox.insert("1.0", filecontents) #This now reads and displays the text
-                messagebox = tk.messagebox.Message(title="File Read", message=filecontents)
-                messagebox.show() #Displays message box with content from read file
+            jsondata = jsonloader(filepath)
+            print(jsondata)
+            for i in jsondata['users']:
+                print(i)
+                textBox.insert("1.0", i) #This now reads and displays the text
+            messagebox = tk.messagebox.Message(title="File Read", message=jsondata)
+            messagebox.show() #Displays message box with content from read file
+
+            # with open(filepath, "r") as file:
+            #     filecontents = file.read()
+            #     textBox.insert("1.0", filecontents) #This now reads and displays the text
+            #     messagebox = tk.messagebox.Message(title="File Read", message=filecontents)
+            #     messagebox.show() #Displays message box with content from read file
             
         textBox = tk.Text(self, height=10, width=50)
         textBox.grid(row=4, column=0, padx=10, pady=10, columnspan=4)
