@@ -20,9 +20,9 @@ class tkinterApp(tk.Tk):
         # creating a container
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
-
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        # container.grid_columnconfigure((0, 1, 2, 3, 4), weight=1)
+        # container.grid_rowconfigure((0, 1, 2, 3, 4), weight=1)
+        # container.grid_columnconfigure(0, weight=1)
 
         # initializing frames to an empty array
         self.frames = {}
@@ -113,6 +113,9 @@ class ScanPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         
+        self.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        # self.grid_rowconfigure((0, 1, 2, 3, 4), weight=1)
+        
         def label_updater(label, text):
             label.config(text=text)
 
@@ -133,7 +136,8 @@ class ScanPage(tk.Frame):
             # button to show frame 2 with text layout2
             button3 = ttk.Button(self, text=env, command=lambda env=env: label_updater(scan_label, env))
             # putting the button in its place by using grid
-            button3.grid(row=3, column=count, padx=5, pady=10)
+            button3.grid(row=3, column=count)
+
             
 
 # second window frame page1
