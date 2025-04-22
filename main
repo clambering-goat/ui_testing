@@ -1,5 +1,7 @@
 import tkinter as tk
+import os
 from tkinter import ttk
+from tkinter import messagebox
 from functools import partial
 LARGEFONT = ("Verdana", 35)
 MENU_ROW_LOC=2 #Change name to clearer represent what location is represented
@@ -107,6 +109,9 @@ def menu_bar(self,controller):
 class ScanPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        
+        def label_updater(label, text):
+            label.config(text=text)
 
         #Title Label
         label = ttk.Label(self, text="Scan", font=LARGEFONT)
@@ -115,16 +120,18 @@ class ScanPage(tk.Frame):
 
         menu_bar(self, controller)
         #constant_buttons(self)
+        scan_label = ttk.Label(self, text="Choose a system to scan")
+        scan_label.grid(row=4, column=0, padx=10, pady=5, columnspan=4)
         # Dropdown options
         env_scan=["sit","dev","nft","uat"]
         for count,env in enumerate(env_scan):
             # add exe call here
-            action_with_arg = partial(print, env)
-            ## button to show frame 2 with text layout2
-            button3 = ttk.Button(self, text=env, command=action_with_arg)
+            # action_with_arg = partial(print, env)
+            # button to show frame 2 with text layout2
+            button3 = ttk.Button(self, text=env, command=lambda env=env: label_updater(scan_label, env))
             # putting the button in its place by using grid
-            button3.grid(row=3+count, column=0, padx=5, pady=10)
-
+            button3.grid(row=3, column=count, padx=5, pady=10)
+            
 
 # second window frame page1
 class ConfigPage(tk.Frame):
@@ -167,12 +174,24 @@ class UpdatePage(tk.Frame):
         select_system(self,print)
         def get_text():
             inputValue = textBox.get("1.0", "end-1c")
-
+            
+        def read_file():
+            textBox.delete("1.0", "end") #this clears the text box
+            directory = os.path.dirname(__file__) 
+            file = "readthisfile.txt"
+            filepath = os.path.join(directory, file)
+            
+            with open(filepath, "r") as file:
+                filecontents = file.read()
+                textBox.insert("1.0", filecontents) #This now reads and displays the text
+                messagebox = tk.messagebox.Message(title="File Read", message=filecontents)
+                messagebox.show() #Displays message box with content from read file
+            
         textBox = tk.Text(self, height=10, width=50)
         textBox.grid(row=4, column=0, padx=10, pady=10, columnspan=4)
 
         buttonCommit = tk.Button(self, height=1, width=10, text="Commit",
-                                 command=lambda: get_text())
+                                 command= read_file)
         # command=lambda: retrieve_input() >>> just means do this when i press the button
         buttonCommit.grid(row=3, column=3, padx=10, pady=10)
 
