@@ -49,6 +49,10 @@ class tkinterApp(tk.Tk):
 
 # first window frame startpage
 def select_system(self,input_function):
+    directory = os.path.dirname(__file__)
+    files = os.listdir(directory)
+    print(files)
+    
     def retrieve_input():
         print(opt.get())
         print(opt2.get())
@@ -70,9 +74,11 @@ def select_system(self,input_function):
         tk.OptionMenu(self, opt2, *ms,command=action_with_arg).grid(row=3, column=2, padx=10, pady=10)
 
     # Dropdown options
-    env = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    # env = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    env = files
     # Selected option variable
     opt = tk.StringVar(value="Monday")
+    opt = tk.StringVar(value=env[0])
 
     tk.OptionMenu(self, opt, *env, command=updae_ms_list).grid(row=3, column=1, padx=10, pady=10)
 
