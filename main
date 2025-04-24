@@ -82,18 +82,16 @@ def select_system(self,input_function):
         # action_with_arg = partial(input_function, opt2.get())
         # tk.OptionMenu(self, opt2, *ms,command=action_with_arg).grid(row=3, column=2, padx=10, pady=10)
         ms_list = {}
-        # ms = opt.get()
         ms = []
         print(f"first ms: {ms}")
         for count, users in enumerate(jsondata['users']):
             entry = {users['name']: count}
             ms_list.update(entry)
             # print(f"this is the users in jsondata: {users}")
-        print(f"ms_list: {ms_list}")
+        # print(f"ms_list: {ms_list}")
         for key in ms_list:
             ms.append(key)
-        print(f"second ms: {ms}")
-        # ms = ms_list[ms]
+        # print(f"second ms: {ms}")
         opt2 = tk.StringVar(value=ms[0])
         action_with_arg = partial(input_function, opt2.get())
         tk.OptionMenu(self, opt2, *ms,command=action_with_arg).grid(row=3, column=2, padx=10, pady=10)
